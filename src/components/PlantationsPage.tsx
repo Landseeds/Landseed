@@ -976,7 +976,7 @@ export default function PlantationsPage() {
         {/* Dynamic Lightbox Modal */}
         <AnimatePresence>
           {lightboxImage && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4">
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -984,38 +984,56 @@ export default function PlantationsPage() {
                 className="absolute inset-0 bg-black/95 backdrop-blur-md"
                 onClick={() => setLightboxImage(null)}
               />
+
+              {/* Floating Mobile Top-Right Close Button */}
+              <button
+                onClick={() => setLightboxImage(null)}
+                className="fixed top-3 right-3 sm:hidden z-[60] w-11 h-11 rounded-full bg-[#0B6B2E] text-white flex items-center justify-center shadow-2xl border-2 border-white/30 active:scale-90 cursor-pointer"
+                aria-label="Close Lightbox"
+              >
+                <X className="w-6 h-6" />
+              </button>
+
               <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
-                className="relative max-w-4xl w-full bg-neutral-900 rounded-3xl overflow-hidden border border-white/10 z-10 max-h-[90vh] flex flex-col"
+                className="relative max-w-4xl w-full bg-neutral-900 rounded-2xl sm:rounded-3xl overflow-hidden border border-white/10 z-10 max-h-[92vh] flex flex-col"
               >
                 <button
                   onClick={() => setLightboxImage(null)}
-                  className="absolute top-4 right-4 z-20 bg-black/80 text-white rounded-full p-2.5 hover:bg-[#0B6B2E] transition-colors cursor-pointer"
+                  className="absolute top-3 sm:top-4 right-3 sm:right-4 z-20 bg-black/80 text-white rounded-full p-2.5 sm:p-2.5 hover:bg-[#0B6B2E] transition-colors cursor-pointer border border-white/15"
                   aria-label="Close Lightbox"
                 >
                   <X className="w-5 h-5" />
                 </button>
 
-                <div className="aspect-[4/3] sm:aspect-[16/10] w-full overflow-hidden bg-black flex items-center justify-center">
+                <div className="aspect-[4/3] sm:aspect-[16/10] max-h-[55vh] sm:max-h-[65vh] w-full overflow-hidden bg-black flex items-center justify-center p-2">
                   <img 
                     src={lightboxImage.url} 
                     alt={lightboxImage.title} 
-                    className="max-h-full max-w-full object-contain"
+                    className="max-h-full max-w-full object-contain rounded-xl"
                   />
                 </div>
 
-                <div className="p-6 sm:p-8 space-y-2 bg-neutral-950 border-t border-white/5">
-                  <span className="text-xs font-bold text-[#F5B700] uppercase tracking-wider">
-                    {lightboxImage.category}
-                  </span>
-                  <h3 className="text-lg sm:text-2xl font-bold font-display text-white">
-                    {lightboxImage.title}
-                  </h3>
-                  <p className="text-xs sm:text-sm text-neutral-400 font-light leading-relaxed">
-                    {lightboxImage.description}
-                  </p>
+                <div className="p-4 sm:p-8 space-y-2 bg-neutral-950 border-t border-white/5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                  <div className="space-y-1">
+                    <span className="text-[10px] sm:text-xs font-bold text-[#F5B700] uppercase tracking-wider block">
+                      {lightboxImage.category}
+                    </span>
+                    <h3 className="text-base sm:text-2xl font-bold font-display text-white">
+                      {lightboxImage.title}
+                    </h3>
+                    <p className="text-xs sm:text-sm text-neutral-400 font-light leading-relaxed">
+                      {lightboxImage.description}
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => setLightboxImage(null)}
+                    className="sm:hidden w-full py-2.5 rounded-xl bg-neutral-800 text-neutral-200 font-bold text-xs uppercase tracking-wider border border-white/10"
+                  >
+                    Close Image
+                  </button>
                 </div>
               </motion.div>
             </div>

@@ -20,10 +20,10 @@ export default function Testimonials() {
         {/* Header Title */}
         <div className="text-center max-w-xl mx-auto mb-20 space-y-4">
           <div className="text-red-500 font-mono text-xs uppercase tracking-wider">
-            Verified Customer Reviews
+            Client Testimonials
           </div>
           <h3 className="text-3xl sm:text-4.5xl font-extrabold font-display tracking-tight text-white">
-            What Our Verified <br />
+            What Our <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-650 via-red-500 to-red-400">
               Investors Are Saying
             </span>
@@ -76,11 +76,8 @@ export default function Testimonials() {
                 />
                 <div className="truncate">
                   <h5 className="text-sm font-bold font-display text-white truncate">{testimonial.name}</h5>
-                  <div className="text-[10px] sm:text-xs text-neutral-400 font-mono flex items-center gap-1.5 mt-0.5 truncate">
+                  <div className="text-[10px] sm:text-xs text-neutral-400 font-mono mt-0.5 truncate">
                     <span className="truncate">{testimonial.role}</span>
-                    <span className="inline-flex items-center gap-0.5 text-emerald-400 font-bold font-sans text-[10px] bg-emerald-500/15 px-1.5 py-0.5 rounded uppercase shrink-0">
-                      <ShieldCheck className="w-3 h-3 text-emerald-400" /> Verified
-                    </span>
                   </div>
                 </div>
               </div>

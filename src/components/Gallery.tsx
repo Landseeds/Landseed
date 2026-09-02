@@ -395,31 +395,41 @@ export default function Gallery({ onOpenBooking }: { onOpenBooking?: () => void 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/95 backdrop-blur-xl p-4 sm:p-6"
+            className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/95 backdrop-blur-xl p-2 sm:p-6"
             onClick={() => setSelectedImageIndex(null)}
           >
+            {/* Dedicated Top-Right Floating Mobile Close Button (Always visible on mobile) */}
+            <button
+              onClick={() => setSelectedImageIndex(null)}
+              className="fixed top-3 right-3 sm:hidden z-[10000] w-11 h-11 rounded-full bg-red-650 text-white flex items-center justify-center shadow-2xl border-2 border-white/30 active:scale-90 cursor-pointer"
+              aria-label="Close modal"
+              title="Close image view"
+            >
+              <X className="w-6 h-6" />
+            </button>
+
             {/* Modal Container */}
             <div 
-              className="relative max-w-5xl w-full max-h-[92vh] flex flex-col bg-neutral-950 border-2 border-white/15 rounded-3xl overflow-hidden shadow-2xl"
+              className="relative max-w-5xl w-full max-h-[92vh] flex flex-col bg-neutral-950 border-2 border-white/15 rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Header Bar */}
-              <div className="flex items-center justify-between px-6 py-4 border-b border-white/10 bg-neutral-900/80 backdrop-blur-md">
-                <div className="flex items-center gap-3">
-                  <span className="px-2.5 py-1 rounded bg-red-650 text-white text-xs font-mono font-bold">
+              <div className="flex items-center justify-between px-3.5 sm:px-6 py-3 sm:py-4 border-b border-white/10 bg-neutral-900/90 backdrop-blur-md gap-2">
+                <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
+                  <span className="px-2 py-0.5 sm:px-2.5 sm:py-1 rounded bg-red-650 text-white text-[11px] sm:text-xs font-mono font-bold shrink-0">
                     {selectedImageIndex + 1} / {filteredItems.length}
                   </span>
-                  <div>
-                    <h4 className="text-sm sm:text-base font-bold text-white font-display truncate max-w-md sm:max-w-xl">
+                  <div className="min-w-0 flex-1">
+                    <h4 className="text-xs sm:text-base font-bold text-white font-display truncate">
                       {activeItem.title}
                     </h4>
-                    <p className="text-[11px] text-red-400 font-mono flex items-center gap-1">
-                      <MapPin className="w-3 h-3" /> {activeItem.location}
+                    <p className="text-[10px] sm:text-[11px] text-red-400 font-mono flex items-center gap-1 truncate">
+                      <MapPin className="w-3 h-3 shrink-0" /> <span className="truncate">{activeItem.location}</span>
                     </p>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 shrink-0">
                   <a
                     href={activeItem.imageUrl}
                     target="_blank"
@@ -431,45 +441,47 @@ export default function Gallery({ onOpenBooking }: { onOpenBooking?: () => void 
                   </a>
                   <button
                     onClick={() => setSelectedImageIndex(null)}
-                    className="p-2 rounded-xl bg-neutral-800 hover:bg-red-650 text-neutral-300 hover:text-white transition-colors border border-white/10 cursor-pointer"
+                    className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-red-650 hover:bg-red-600 text-white transition-all border border-red-500 cursor-pointer text-xs font-bold shadow-md active:scale-95"
                     title="Close"
+                    aria-label="Close"
                   >
                     <X className="w-4 h-4" />
+                    <span className="hidden sm:inline">Close</span>
                   </button>
                 </div>
               </div>
 
               {/* Main Image Stage with bold high-contrast framing */}
-              <div className="relative flex-1 min-h-[300px] max-h-[65vh] bg-black flex items-center justify-center overflow-hidden p-2">
+              <div className="relative flex-1 min-h-[260px] max-h-[60vh] sm:max-h-[65vh] bg-black flex items-center justify-center overflow-hidden p-2">
                 <img
                   src={activeItem.imageUrl}
                   alt={activeItem.title}
                   referrerPolicy="no-referrer"
-                  className="max-h-[62vh] w-auto max-w-full object-contain rounded-xl shadow-2xl filter contrast-[1.08] brightness-[0.98]"
+                  className="max-h-[58vh] sm:max-h-[62vh] w-auto max-w-full object-contain rounded-xl shadow-2xl filter contrast-[1.08] brightness-[0.98]"
                 />
 
                 {/* Left navigation arrow */}
                 <button
                   onClick={handlePrev}
-                  className="absolute left-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-black/70 hover:bg-red-650 text-white border border-white/20 transition-all active:scale-90 cursor-pointer shadow-xl backdrop-blur-md"
+                  className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 p-2 sm:p-3 rounded-full bg-black/75 hover:bg-red-650 text-white border border-white/20 transition-all active:scale-90 cursor-pointer shadow-xl backdrop-blur-md"
                   title="Previous (Left Arrow)"
                 >
-                  <ChevronLeft className="w-6 h-6" />
+                  <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
                 </button>
 
                 {/* Right navigation arrow */}
                 <button
                   onClick={handleNext}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-black/70 hover:bg-red-650 text-white border border-white/20 transition-all active:scale-90 cursor-pointer shadow-xl backdrop-blur-md"
+                  className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 p-2 sm:p-3 rounded-full bg-black/75 hover:bg-red-650 text-white border border-white/20 transition-all active:scale-90 cursor-pointer shadow-xl backdrop-blur-md"
                   title="Next (Right Arrow)"
                 >
-                  <ChevronRight className="w-6 h-6" />
+                  <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
                 </button>
               </div>
 
               {/* Footer Information Box */}
-              <div className="px-6 py-4 bg-neutral-900/90 border-t border-white/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                <div className="space-y-1 max-w-2xl">
+              <div className="px-4 sm:px-6 py-3 sm:py-4 bg-neutral-900/90 border-t border-white/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4">
+                <div className="space-y-1 max-w-2xl min-w-0">
                   <div className="flex items-center gap-2">
                     <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-white/10 text-neutral-300 font-semibold">
                       {activeItem.category}
@@ -478,18 +490,24 @@ export default function Gallery({ onOpenBooking }: { onOpenBooking?: () => void 
                       <CheckCircle2 className="w-3 h-3" /> Fully Surveyed Plot
                     </span>
                   </div>
-                  <p className="text-xs text-neutral-300 leading-relaxed font-light">
+                  <p className="text-xs text-neutral-300 leading-relaxed font-light line-clamp-2 sm:line-clamp-none">
                     {activeItem.description}
                   </p>
                 </div>
 
-                <div className="flex items-center gap-3 w-full sm:w-auto shrink-0 justify-end">
+                <div className="flex items-center gap-2.5 w-full sm:w-auto shrink-0 justify-between sm:justify-end pt-1 sm:pt-0 border-t sm:border-t-0 border-white/5">
+                  <button
+                    onClick={() => setSelectedImageIndex(null)}
+                    className="sm:hidden px-3.5 py-2 rounded-xl bg-neutral-800 text-neutral-300 hover:text-white font-bold text-xs uppercase border border-white/10"
+                  >
+                    Cancel
+                  </button>
                   <button
                     onClick={() => {
                       setSelectedImageIndex(null);
                       if (onOpenBooking) onOpenBooking();
                     }}
-                    className="px-4 py-2 rounded-xl bg-red-650 hover:bg-red-600 text-white font-bold text-xs uppercase tracking-wider transition-all cursor-pointer shadow-md"
+                    className="flex-1 sm:flex-none px-4 py-2 rounded-xl bg-red-650 hover:bg-red-600 text-white font-bold text-xs uppercase tracking-wider transition-all cursor-pointer shadow-md text-center"
                   >
                     Inquire on This Plot
                   </button>

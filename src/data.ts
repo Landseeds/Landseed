@@ -198,7 +198,7 @@ export const TESTIMONIALS_DATA: Testimonial[] = [
     name: "Dr. Olumide Adeleke",
     role: "Lecturer / Diaspora Investor",
     quote: "Acquiring premium plots from abroad is typically fraught with risk, but LandSeeds was a complete game changer. Their prompt dispatch of my Registered Survey and video proof of physical allocation set a level of transparency I haven't seen elsewhere.",
-    avatarUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=150",
+    avatarUrl: "https://images.unsplash.com/photo-1531384441138-2736e62e0919?q=80&w=300&auto=format&fit=crop",
     rating: 5
   },
   {
@@ -206,7 +206,7 @@ export const TESTIMONIALS_DATA: Testimonial[] = [
     name: "Mrs. Funmilayo Sowemimo",
     role: "Merchant & Epe Business Owner",
     quote: "I bought two plots in Epe for hostel projects. The appreciate value has already grown beyond my initial projections. LandSeeds made my land acquisition process seamless and stress-free. Their honesty gave me absolute confidence.",
-    avatarUrl: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=150",
+    avatarUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=300&auto=format&fit=crop",
     rating: 5
   },
   {
@@ -214,7 +214,7 @@ export const TESTIMONIALS_DATA: Testimonial[] = [
     name: "Engr. Paul Nwosu",
     role: "Real Estate Arbitrage Consultant",
     quote: "LandSeeds has built a rare brand of trust in the Nigerian real estate space. Their selection of locations near Ketu Epe and Alaro Axis are brilliant. No land grabbers (Omo-onile) issues, no hidden parameters. Just genuine development.",
-    avatarUrl: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=150",
+    avatarUrl: "https://images.unsplash.com/photo-1522529599102-193c0d76b5b6?q=80&w=300&auto=format&fit=crop",
     rating: 5
   }
 ];

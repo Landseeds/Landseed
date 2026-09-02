@@ -9,10 +9,10 @@ import { Trees, MapPin, Sparkles, MessageCircle, ArrowDown } from "lucide-react"
 
 interface HeroProps {
   onOpenBooking: () => void;
-  onScrollToEstates: () => void;
+  onScrollToGallery: () => void;
 }
 
-export default function Hero({ onOpenBooking, onScrollToEstates }: HeroProps) {
+export default function Hero({ onOpenBooking, onScrollToGallery }: HeroProps) {
   const handleWhatsAppChat = () => {
     const text = "Hello LandSeeds Team, I am visiting your premium real estate platform and would like to inquire about genuine lands in Lagos State - Epe.";
     window.open(`https://wa.me/2348108640108?text=${encodeURIComponent(text)}`, "_blank", "noopener,noreferrer");
@@ -180,10 +180,10 @@ export default function Hero({ onOpenBooking, onScrollToEstates }: HeroProps) {
           className="flex flex-col sm:flex-row gap-4 justify-center items-center mt-10 max-w-md mx-auto"
         >
           <button
-            onClick={onScrollToEstates}
+            onClick={onScrollToGallery}
             className="w-full sm:w-auto cursor-pointer inline-flex items-center justify-center gap-2 bg-red-650 hover:bg-red-750 text-white font-semibold px-8 py-4 rounded-xl transition-all shadow-lg shadow-red-650/20 hover:shadow-red-650/40 hover:-translate-y-0.5 active:translate-y-0 text-sm"
           >
-            View Available Estates
+            Explore Project Gallery
           </button>
           <button
             onClick={handleWhatsAppChat}
@@ -231,7 +231,7 @@ export default function Hero({ onOpenBooking, onScrollToEstates }: HeroProps) {
         </motion.div>
 
         {/* Scroll indicator */}
-        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-25 text-neutral-500 animate-bounce cursor-pointer flex flex-col items-center gap-1.5 hover:text-white transition-all" onClick={onScrollToEstates}>
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-25 text-neutral-500 animate-bounce cursor-pointer flex flex-col items-center gap-1.5 hover:text-white transition-all" onClick={onScrollToGallery}>
           <span className="text-[10px] font-mono tracking-widest uppercase">Explore LandSeeds</span>
           <ArrowDown className="w-4 h-4" />
         </div>

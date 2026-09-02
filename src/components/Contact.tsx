@@ -6,10 +6,13 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { 
-  Building2, MapPin, Globe, Instagram, Mail, Phone, Clock, Send, MessageSquare, Check, Sparkles, ChevronRight
+  Building2, MapPin, Globe, Instagram, Mail, Phone, Clock, Send, MessageSquare, Check, Sparkles, ChevronRight, ExternalLink, Navigation, Layers
 } from "lucide-react";
 import { ESTATES_DATA } from "../data";
 import { Estate } from "../types";
+
+const GOOGLE_MAPS_URL = "https://maps.app.goo.gl/RtXTWeK7vZ9ED5439";
+const GOOGLE_MAPS_EMBED_URL = "https://maps.google.com/maps?q=6.6278571,3.984016&hl=en&z=13&output=embed";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -42,16 +45,6 @@ export default function Contact() {
     const text = "Hello LandSeeds Team, I would like to get in touch regarding available estate plots in Lagos State - Epe. Please connect me with an investment counselor.";
     window.open(`https://wa.me/2348108640108?text=${encodeURIComponent(text)}`, "_blank", "noopener,noreferrer");
   };
-
-  // Graphical vector representation layout coordinates for major Lagos State - Epe hubs
-  const mapCoordinatesPinMap = [
-    { id: "epe-phase-1", top: "42%", left: "48%", isPrimaryRegion: true },
-    { id: "ketu-epe", top: "75%", left: "12%", isPrimaryRegion: true },
-    { id: "itokin-epe", top: "48%", left: "32%", isPrimaryRegion: false },
-    { id: "alaro-corridor", top: "68%", left: "45%", isPrimaryRegion: true },
-    { id: "epe-marina", top: "82%", left: "38%", isPrimaryRegion: true },
-    { id: "temu-epe", top: "25%", left: "62%", isPrimaryRegion: true }
-  ];
 
   return (
     <section className="relative py-24 bg-black overflow-hidden" id="contact-section">
@@ -95,6 +88,15 @@ export default function Contact() {
                   <p className="text-xs text-neutral-450 mt-1 select-all">
                     2, Iperu Akesan, Iyana - Ipaja, Lagos.
                   </p>
+                  <a 
+                    href={GOOGLE_MAPS_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 text-[11px] text-red-500 hover:text-red-400 font-medium mt-1.5 transition-colors"
+                  >
+                    <span>View on Google Maps</span>
+                    <ExternalLink className="w-3 h-3" />
+                  </a>
                 </div>
               </div>
 
@@ -235,119 +237,140 @@ export default function Contact() {
 
           </div>
 
-          {/* RIGHT COLUMN: HIGH-CONTRAST SIMULATED INTERACTIVE MAP INTEGRATION */}
+          {/* RIGHT COLUMN: GOOGLE MAPS INTEGRATION */}
           <div className="lg:col-span-6 space-y-6">
             
             <div className="rounded-2xl border border-white/10 bg-neutral-900/60 p-5 sm:p-6 backdrop-blur-md relative overflow-hidden flex flex-col justify-between h-full">
               <div>
-                <div className="flex justify-between items-center mb-4">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
                   <div>
-                    <h4 className="text-base sm:text-lg font-bold font-display text-white">
-                      Lagos State - Epe Core Map Hub
+                    <h4 className="text-base sm:text-lg font-bold font-display text-white flex items-center gap-2">
+                      <span>Interactive Location Map</span>
+                      <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-red-650/20 text-red-400 border border-red-500/20">
+                        Live GPS
+                      </span>
                     </h4>
                     <p className="text-[11px] text-neutral-400">
-                      Tap property markers below to view location specifics
+                      Explore LandSeeds project hubs and headquarters on Google Maps
                     </p>
                   </div>
-                  <div className="rounded-full h-8 w-8 bg-neutral-955 flex items-center justify-center text-red-500 border border-white/10 shadow-inner">
-                    <MapPin className="w-4.5 h-4.5" />
-                  </div>
+                  
+                  <a
+                    href={GOOGLE_MAPS_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-red-650/15 hover:bg-red-650/30 text-red-400 border border-red-500/20 text-xs font-semibold transition-all shrink-0 active:scale-95"
+                    id="open-google-maps-btn"
+                  >
+                    <span>Open in Google Maps</span>
+                    <ExternalLink className="w-3.5 h-3.5" />
+                  </a>
                 </div>
 
-                {/* Simulated Geographic Canvas */}
-                <div className="relative w-full aspect-[4/3] bg-black/60 rounded-xl overflow-hidden border border-white/5 select-none" id="interactive-map-canvas">
-                  
-                  {/* Subtle vector grid lines on background of map */}
-                  <div className="absolute inset-0 bg-radial-[circle_at_center,_#111111_0%,_#000000_100%]">
-                    {/* Simplified contours of Ogun state inside map canvas */}
-                    <svg viewBox="0 0 100 80" className="absolute inset-0 w-full h-full opacity-[0.14] fill-none stroke-white" strokeWidth="0.4">
-                      {/* Outline representing simplified state border boundary */}
-                      <path d="M 15 15 Q 35 12, 50 18 T 85 10 T 92 45 T 70 70 T 35 72 T 12 55 T 15 15 Z" />
-                      {/* Sub-hubs transit pathways */}
-                      <path d="M 15 15 L 48 42 L 82 82 M 45 68 L 62 25" strokeDasharray="2 2" stroke="rgba(255,255,255,0.6)" />
-                    </svg>
-                  </div>
+                {/* Embedded Live Google Maps */}
+                <div className="relative w-full aspect-[4/3] sm:aspect-[16/10] bg-black/60 rounded-xl overflow-hidden border border-white/10 shadow-2xl" id="google-maps-container">
+                  <iframe
+                    title="LandSeeds Google Map"
+                    src={GOOGLE_MAPS_EMBED_URL}
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0 }}
+                    allowFullScreen
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    className="w-full h-full filter contrast-[1.05] brightness-[0.95]"
+                  />
 
-                  {/* Layout coordinates plotting from Array */}
-                  {mapCoordinatesPinMap.map((pin) => {
-                    const est = ESTATES_DATA.find((e) => e.id === pin.id);
-                    if (!est) return null;
-                    const isActive = activeMapEstate?.id === pin.id;
-
-                    return (
-                      <div
-                        key={pin.id}
-                        style={{ top: pin.top, left: pin.left }}
-                        className="absolute -translate-x-1/2 -translate-y-1/2 z-10 cursor-pointer group/pin"
-                        onClick={() => setActiveMapEstate(est)}
-                      >
-                        <div className="relative flex items-center justify-center">
-                          {/* Pulsing ring underneath active pinpoint */}
-                          {isActive && (
-                            <span className="absolute animate-ping inline-flex h-8 w-8 rounded-full bg-red-650 opacity-40"></span>
-                          )}
-                          
-                          {/* Inner map node */}
-                          <div className={`h-4 w-4 rounded-full border flex items-center justify-center shadow-lg transition-all duration-300 ${
-                            isActive 
-                              ? "bg-red-600 border-white scale-125 z-20" 
-                              : "bg-neutral-900 border-red-650 hover:bg-red-650 hover:border-white"
-                          }`}>
-                            <div className="h-1.5 w-1.5 rounded-full bg-white" />
-                          </div>
-                          
-                          {/* Inline micro Label */}
-                          <div className={`absolute left-5 bg-black/90 border border-white/10 px-1.5 py-0.5 rounded text-[8px] sm:text-[9px] font-mono tracking-wide text-white uppercase whitespace-nowrap transition-opacity pointer-events-none ${
-                            isActive ? "opacity-100" : "opacity-40 group-pin-hover:opacity-100"
-                          }`}>
-                            {est.title.replace("The Seeds Estate – ", "")}
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })}
+                  {/* Overlay quick directions button */}
+                  <a
+                    href={GOOGLE_MAPS_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="absolute bottom-3 right-3 z-10 flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-black/85 hover:bg-black text-white text-xs font-medium border border-white/20 shadow-lg backdrop-blur-md transition-all active:scale-95"
+                  >
+                    <Navigation className="w-3.5 h-3.5 text-red-500" />
+                    <span>Get Directions</span>
+                  </a>
                 </div>
               </div>
 
-              {/* Interactive Info Card matching selected Map Mark */}
-              <AnimatePresence mode="wait">
-                {activeMapEstate && (
-                  <motion.div
-                    key={activeMapEstate.id}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 10 }}
-                    transition={{ duration: 0.3 }}
-                    className="mt-6 rounded-xl border border-white/5 bg-black/40 p-4 space-y-3"
-                  >
-                    <div className="flex justify-between items-start border-b border-white/5 pb-2">
-                      <div>
-                        <h5 className="text-xs font-semibold text-white font-display">
-                          {activeMapEstate.title}
-                        </h5>
-                        <p className="text-[10px] text-neutral-400 mt-0.5 flex items-center gap-1">
-                          <MapPin className="w-3 h-3 text-red-500" /> {activeMapEstate.location}
-                        </p>
-                      </div>
-                      <span className="text-[9px] font-mono font-semibold px-2 py-0.5 bg-red-650/10 text-red-400 rounded border border-red-650/15">
-                        Active
-                      </span>
-                    </div>
+              {/* Estate Location Quick Selectors */}
+              <div className="mt-6 space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-[11px] font-mono uppercase tracking-wider text-neutral-400">
+                    Quick Estate Details
+                  </span>
+                  <span className="text-[10px] text-neutral-500">
+                    Select to view details
+                  </span>
+                </div>
 
-                    <div className="grid grid-cols-2 gap-4 text-xs">
-                      <div>
-                        <span className="text-[10px] text-neutral-500 block">Documentation Status:</span>
-                        <span className="text-neutral-300 font-medium">{activeMapEstate.documentation}</span>
+                {/* Quick pill selector */}
+                <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-none">
+                  {ESTATES_DATA.map((est) => {
+                    const isSelected = activeMapEstate?.id === est.id;
+                    return (
+                      <button
+                        key={est.id}
+                        onClick={() => setActiveMapEstate(est)}
+                        className={`px-2.5 py-1.5 rounded-lg text-[11px] font-medium whitespace-nowrap transition-all cursor-pointer border ${
+                          isSelected
+                            ? "bg-red-650 text-white border-red-500 shadow-sm"
+                            : "bg-black/40 text-neutral-400 border-white/5 hover:text-white hover:border-white/15"
+                        }`}
+                      >
+                        {est.title.replace("The Seeds Estate – ", "")}
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {/* Interactive Info Card matching selected Map Mark */}
+                <AnimatePresence mode="wait">
+                  {activeMapEstate && (
+                    <motion.div
+                      key={activeMapEstate.id}
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -8 }}
+                      transition={{ duration: 0.2 }}
+                      className="rounded-xl border border-white/5 bg-black/40 p-4 space-y-3"
+                    >
+                      <div className="flex justify-between items-start border-b border-white/5 pb-2">
+                        <div>
+                          <h5 className="text-xs font-semibold text-white font-display">
+                            {activeMapEstate.title}
+                          </h5>
+                          <p className="text-[10px] text-neutral-400 mt-0.5 flex items-center gap-1">
+                            <MapPin className="w-3 h-3 text-red-500" /> {activeMapEstate.location}
+                          </p>
+                        </div>
+                        <a
+                          href={GOOGLE_MAPS_URL}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-[10px] font-mono font-semibold px-2 py-0.5 bg-red-650/10 text-red-400 hover:text-red-300 rounded border border-red-650/20 inline-flex items-center gap-1"
+                        >
+                          <span>View on Map</span>
+                          <ExternalLink className="w-2.5 h-2.5" />
+                        </a>
                       </div>
-                      <div>
-                        <span className="text-[10px] text-neutral-500 block">Entry-level Pricing:</span>
-                        <span className="text-white font-bold block">250 sqm - ₦{activeMapEstate.prices[250].toLocaleString()}</span>
-                        <span className="text-white font-bold block">500 sqm - ₦{activeMapEstate.prices[500].toLocaleString()}</span>
+
+                      <div className="grid grid-cols-2 gap-4 text-xs">
+                        <div>
+                          <span className="text-[10px] text-neutral-500 block">Documentation Status:</span>
+                          <span className="text-neutral-300 font-medium">{activeMapEstate.documentation}</span>
+                        </div>
+                        <div>
+                          <span className="text-[10px] text-neutral-500 block">Entry Pricing:</span>
+                          <span className="text-white font-bold block">250 sqm - ₦{activeMapEstate.prices[250].toLocaleString()}</span>
+                          <span className="text-white font-bold block">500 sqm - ₦{activeMapEstate.prices[500].toLocaleString()}</span>
+                        </div>
                       </div>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
 
             </div>
 

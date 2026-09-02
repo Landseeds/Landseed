@@ -8,8 +8,7 @@ import { motion, AnimatePresence } from "motion/react";
 import { Menu, X, Phone, MessageSquare, ShieldCheck, ArrowRight, Sun, Award } from "lucide-react";
 import Hero from "./components/Hero";
 import About from "./components/About";
-import FeaturedEstates from "./components/FeaturedEstates";
-import InvestmentBenefits from "./components/InvestmentBenefits";
+import Gallery from "./components/Gallery";
 import Testimonials from "./components/Testimonials";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
@@ -41,8 +40,8 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const handleScrollToEstates = () => {
-    handleScrollToSection("estates-section");
+  const handleScrollToGallery = () => {
+    handleScrollToSection("gallery-section");
   };
 
   const triggerDirectWhatsApp = () => {
@@ -95,7 +94,7 @@ export default function App() {
             </button>
           </div>
 
-          {/* Desktop link sets */}
+            {/* Desktop link sets */}
           {activePage === "real-estate" ? (
             <nav className="hidden xl:flex items-center gap-6 text-xs font-semibold text-neutral-355 tracking-wider uppercase">
               <button 
@@ -106,17 +105,10 @@ export default function App() {
                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-red-600 transition-all duration-300 group-hover:w-full" />
               </button>
               <button 
-                onClick={handleScrollToEstates} 
+                onClick={() => handleScrollToSection("gallery-section")} 
                 className="hover:text-white transition-colors cursor-pointer relative py-2 group"
               >
-                Estates
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-red-600 transition-all duration-300 group-hover:w-full" />
-              </button>
-              <button 
-                onClick={() => handleScrollToSection("benefits-section")} 
-                className="hover:text-white transition-colors cursor-pointer relative py-2 group"
-              >
-                ROI Analytics
+                Project Gallery
                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-red-600 transition-all duration-300 group-hover:w-full" />
               </button>
               <button 
@@ -236,17 +228,10 @@ export default function App() {
                     </button>
                     <button
                       type="button"
-                      onClick={handleScrollToEstates}
+                      onClick={() => handleScrollToSection("gallery-section")}
                       className="w-full text-left py-2 border-b border-white/5 hover:text-white"
                     >
-                      Premium Estates
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => handleScrollToSection("benefits-section")}
-                      className="w-full text-left py-2 border-b border-white/5 hover:text-white"
-                    >
-                      ROI Analytics
+                      Project Gallery
                     </button>
                     <button
                       type="button"
@@ -340,17 +325,14 @@ export default function App() {
           {/* HERO SECTION */}
           <Hero 
             onOpenBooking={() => handleOpenBooking()} 
-            onScrollToEstates={handleScrollToEstates} 
+            onScrollToGallery={handleScrollToGallery} 
           />
 
           {/* ABOUT & WHY CHOOSE LANDSEEDS SECTION */}
           <About onOpenBooking={() => handleOpenBooking()} />
 
-          {/* FEATURED ESTATES SECTION */}
-          <FeaturedEstates onSelectEstate={(est) => handleOpenBooking(est)} />
-
-          {/* INVESTMENT BENEFITS & DYNAMIC APPRECIATION CHART */}
-          <InvestmentBenefits />
+          {/* BOLD PROJECT & SITE GALLERY */}
+          <Gallery onOpenBooking={() => handleOpenBooking()} />
 
           {/* TESTIMONIAL REVIEWS SECTION */}
           <Testimonials />
@@ -417,7 +399,6 @@ export default function App() {
       {/* ========================================== */}
       <Footer 
         onScrollToTop={handleScrollToTop}
-        onScrollToEstates={handleScrollToEstates}
         onScrollToSection={handleScrollToSection}
         onOpenBooking={() => handleOpenBooking()}
         activePage={activePage}

@@ -58,7 +58,22 @@ export default function About({ onOpenBooking }: AboutProps) {
               We eliminate traditional real estate friction by doing exhaustive surveyor due diligence and legal title validations, and rendering the plots highly affordable through flexible investment installment strategies.
             </p>
 
-            <div className="pt-4">
+            <div className="grid grid-cols-3 gap-4 pt-2 border-t border-white/10">
+              <div>
+                <div className="text-xl sm:text-2xl font-bold font-display text-white">100%</div>
+                <div className="text-[11px] text-neutral-400 font-mono uppercase mt-0.5">Genuine Lands</div>
+              </div>
+              <div>
+                <div className="text-xl sm:text-2xl font-bold font-display text-white">₦0</div>
+                <div className="text-[11px] text-neutral-400 font-mono uppercase mt-0.5">Omo-Onile Debt</div>
+              </div>
+              <div>
+                <div className="text-xl sm:text-2xl font-bold font-display text-white">Instant</div>
+                <div className="text-[11px] text-neutral-400 font-mono uppercase mt-0.5">Site Allocation</div>
+              </div>
+            </div>
+
+            <div className="pt-2">
               <button
                 onClick={onOpenBooking}
                 className="group inline-flex items-center gap-2 cursor-pointer text-sm font-semibold text-white bg-red-650/10 border border-red-600/30 hover:bg-red-650 hover:border-red-600 px-6 py-3.5 rounded-xl transition-all"
@@ -70,33 +85,58 @@ export default function About({ onOpenBooking }: AboutProps) {
             </div>
           </div>
 
-          {/* Graphical Frame Right Panel */}
-          <div className="lg:col-span-7 relative">
-            <div className="relative rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-neutral-900/60 p-4 sm:p-6 backdrop-blur-md">
-              <div 
-                className="h-80 w-full rounded-xl bg-cover bg-center brightness-[0.75] relative overflow-hidden group"
-                style={{ backgroundImage: `url('https://i.imgur.com/COFmz2N.png')` }}
-              >
-                {/* Floating Stamp badge */}
-                <div className="absolute bottom-4 left-4 right-4 sm:right-auto bg-black/85 backdrop-blur-md px-3.5 py-2 rounded-lg border border-white/10 flex items-center gap-2 select-none">
-                  <ShieldCheck className="w-4 h-4 sm:w-4.5 sm:h-4.5 text-red-500 flex-shrink-0" />
-                  <span className="text-[10px] sm:text-xs font-mono font-medium tracking-wide text-white uppercase">C of O • Registered Survey Ready</span>
+          {/* Professional Executive Presentation - Styled like Gallery Image Box */}
+          <div className="lg:col-span-7">
+            <div className="group relative rounded-3xl overflow-hidden bg-neutral-950 border-2 border-white/15 hover:border-red-500 transition-all duration-300 shadow-2xl hover:shadow-red-650/25 flex flex-col">
+              {/* Cover Image Container with Gallery-style Framing */}
+              <div className="relative w-full aspect-[4/5] sm:aspect-[1/1] md:aspect-[4/3] lg:h-[540px] overflow-hidden bg-neutral-900">
+                <img
+                  src="https://i.imgur.com/Mu31zju.png"
+                  alt="Mr. George Tobi Bankole - MD/CEO LandSeeds Integrated Services Ltd"
+                  referrerPolicy="no-referrer"
+                  className="w-full h-[130%] -translate-y-10 sm:-translate-y-16 md:-translate-y-20 lg:-translate-y-24 object-cover object-top filter brightness-[0.96] contrast-[1.05] transition-transform duration-700 ease-out group-hover:scale-105"
+                  onError={(e) => {
+                    const target = e.currentTarget;
+                    if (!target.dataset.triedFallback) {
+                      target.dataset.triedFallback = "true";
+                      target.src = "https://imgur.com/Mu31zju.png";
+                    }
+                  }}
+                />
+
+                {/* Deep Gradient Overlays for High Contrast Readability */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/35 to-transparent opacity-90 group-hover:opacity-95 transition-opacity duration-300 pointer-events-none" />
+
+                {/* Top Tag Badge */}
+                <div className="absolute top-4 left-4 z-10">
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-black/85 backdrop-blur-md border border-white/20 text-xs font-mono font-bold tracking-wide uppercase text-white shadow-lg">
+                    <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
+                    Executive Leadership
+                  </span>
+                </div>
+
+                {/* CEO Role & Name Overlay */}
+                <div className="absolute bottom-4 sm:bottom-5 left-4 sm:left-6 right-4 sm:right-6 z-10">
+                  <div className="flex items-center gap-1.5 text-xs text-red-400 font-bold font-mono mb-1.5">
+                    <ShieldCheck className="w-3.5 h-3.5 text-red-500 shrink-0" />
+                    <span>MD / CEO, LandSeeds Integrated Services Ltd</span>
+                  </div>
+                  <h3 className="text-xl sm:text-2xl lg:text-3xl font-black text-white font-display leading-tight group-hover:text-red-400 transition-colors">
+                    Mr. George Tobi Bankole
+                  </h3>
                 </div>
               </div>
 
-              {/* Company statistics teaser inside About area */}
-              <div className="grid grid-cols-3 gap-4 mt-6 text-center">
-                <div className="bg-black/40 rounded-lg p-3 border border-white/5">
-                  <div className="text-xl sm:text-2xl font-bold font-display text-white">100%</div>
-                  <div className="text-[10px] text-neutral-400 font-mono uppercase tracking-wider mt-1">Genuine Lands</div>
-                </div>
-                <div className="bg-black/40 rounded-lg p-3 border border-white/5">
-                  <div className="text-xl sm:text-2xl font-bold font-display text-white">₦0</div>
-                  <div className="text-[10px] text-neutral-400 font-mono uppercase tracking-wider mt-1">Omo-Onile Debt</div>
-                </div>
-                <div className="bg-black/40 rounded-lg p-3 border border-white/5">
-                  <div className="text-xl sm:text-2xl font-bold font-display text-white">Instant</div>
-                  <div className="text-[10px] text-neutral-400 font-mono uppercase tracking-wider mt-1">Site Allocation</div>
+              {/* Bottom Detail Strip matching gallery cards */}
+              <div className="p-5 sm:p-6 bg-neutral-900/95 border-t border-white/10 flex-1 flex flex-col justify-between">
+                <p className="text-neutral-300 font-light text-xs sm:text-sm leading-relaxed">
+                  Guiding LandSeeds with institutional governance, ensuring zero litigation, vetted statutory perfection, and authentic land ownership across Lagos &amp; Epe.
+                </p>
+                <div className="mt-4 pt-4 border-t border-white/10 flex items-center justify-between text-xs font-medium text-neutral-400">
+                  <span className="px-2.5 py-1 rounded bg-white/5 border border-white/5 text-neutral-300 font-mono text-[11px] uppercase">Corporate Leadership</span>
+                  <span className="text-red-400 font-bold inline-flex items-center gap-1 font-mono text-xs uppercase tracking-wider">
+                    Verified Executive
+                  </span>
                 </div>
               </div>
             </div>

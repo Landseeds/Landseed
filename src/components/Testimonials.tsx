@@ -72,13 +72,13 @@ export default function Testimonials() {
                   alt={testimonial.name}
                   loading="lazy"
                   referrerPolicy="no-referrer"
-                  className="w-12 h-12 rounded-full object-cover border border-white/10 shadow-inner group-hover:border-red-650/40 transition-colors"
+                  className="w-13 h-13 rounded-full object-cover border-2 border-white/10 shadow-md group-hover:border-red-500/50 transition-colors shrink-0"
                 />
                 <div className="truncate">
                   <h5 className="text-sm font-bold font-display text-white truncate">{testimonial.name}</h5>
-                  <div className="text-[10px] sm:text-xs text-neutral-500 font-mono flex items-center gap-1.5 mt-0.5 truncate">
+                  <div className="text-[10px] sm:text-xs text-neutral-400 font-mono flex items-center gap-1.5 mt-0.5 truncate">
                     <span className="truncate">{testimonial.role}</span>
-                    <span className="inline-flex items-center gap-0.5 text-emerald-500 font-bold font-sans text-[10px] bg-emerald-500/10 px-1.5 py-0.5 rounded uppercase">
+                    <span className="inline-flex items-center gap-0.5 text-emerald-400 font-bold font-sans text-[10px] bg-emerald-500/15 px-1.5 py-0.5 rounded uppercase shrink-0">
                       <ShieldCheck className="w-3 h-3 text-emerald-400" /> Verified
                     </span>
                   </div>

@@ -4,18 +4,19 @@
  */
 
 import React from "react";
-import { Sparkles, Instagram, Facebook, ArrowUp, Send, ShieldCheck, Mail, Phone, ExternalLink, Globe } from "lucide-react";
+import { Sparkles, Instagram, Facebook, ArrowUp, Send, ShieldCheck, Mail, Phone, ExternalLink, Globe, MapPin } from "lucide-react";
 import { ESTATES_DATA } from "../data";
+
+const GOOGLE_MAPS_URL = "https://maps.app.goo.gl/RtXTWeK7vZ9ED5439";
 
 interface FooterProps {
   onScrollToTop: () => void;
-  onScrollToEstates: () => void;
   onScrollToSection: (sectionId: string) => void;
   onOpenBooking: () => void;
   activePage?: "real-estate" | "plantations";
 }
 
-export default function Footer({ onScrollToTop, onScrollToEstates, onScrollToSection, onOpenBooking, activePage = "real-estate" }: FooterProps) {
+export default function Footer({ onScrollToTop, onScrollToSection, onOpenBooking, activePage = "real-estate" }: FooterProps) {
   const currentYear = new Date().getFullYear();
 
   const handleNewsletterSubmit = (e: React.FormEvent) => {
@@ -105,13 +106,8 @@ export default function Footer({ onScrollToTop, onScrollToEstates, onScrollToSec
                     </button>
                   </li>
                   <li>
-                    <button onClick={onScrollToEstates} className="hover:text-white transition-colors cursor-pointer text-left">
-                      Premium Estates
-                    </button>
-                  </li>
-                  <li>
-                    <button onClick={() => onScrollToSection("benefits-section")} className="hover:text-white transition-colors cursor-pointer text-left">
-                      ROI Analytics
+                    <button onClick={() => onScrollToSection("gallery-section")} className="hover:text-white transition-colors cursor-pointer text-left">
+                      Project Gallery
                     </button>
                   </li>
                   <li>
@@ -225,6 +221,18 @@ export default function Footer({ onScrollToTop, onScrollToEstates, onScrollToSec
                   @land_seeds
                 </a>
               </div>
+              <div className="flex gap-2">
+                <MapPin className={`w-4 h-4 ${textAccent} flex-shrink-0`} />
+                <a 
+                  href={GOOGLE_MAPS_URL} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="hover:text-white hover:underline flex items-center gap-1 text-neutral-300"
+                >
+                  <span>View on Google Maps</span>
+                  <ExternalLink className="w-3 h-3 text-neutral-500 inline" />
+                </a>
+              </div>
               <div className="pt-2 border-t border-white/5 space-y-1 text-[11px] text-neutral-500">
                 <p>Support Hour Desk:</p>
                 <p>Monday - Friday: 8 AM - 6 PM</p>
@@ -236,14 +244,17 @@ export default function Footer({ onScrollToTop, onScrollToEstates, onScrollToSec
         </div>
       </div>
 
-      {/* Extreme Bottom Level (Copyright info and back-to-top buttons) */}
+      {/* Extreme Bottom Level (Copyright info, signature and back-to-top buttons) */}
       <div className="bg-[#0b0b0b] border-t border-white/5">
         <div className="max-w-7xl mx-auto px-6 py-6 flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
           
-          {/* Legal statement */}
-          <div className="text-xs text-neutral-500 font-light space-y-1">
+          {/* Legal statement & Signature */}
+          <div className="text-xs text-neutral-500 font-light space-y-1.5">
             <p>© {currentYear} LandSeeds Integrated Services Ltd. All Rights Reserved.</p>
-            <p className="text-[10px] text-neutral-600">
+            <p className="text-[11px] text-neutral-400">
+              Designed & Developed by <span className="text-white font-medium tracking-wide">Quotients Digital Horizon Ltd</span>
+            </p>
+            <p className="text-[10px] text-neutral-600 max-w-2xl">
               Disclaimer: Lands offered are fully surveyed. Final acquisition receipt and immediate physical land assignment is guaranteed upon successful clearing of purchase parameters.
             </p>
           </div>
@@ -251,7 +262,7 @@ export default function Footer({ onScrollToTop, onScrollToEstates, onScrollToSec
           {/* Back to top index shortcut */}
           <button
             onClick={onScrollToTop}
-            className="flex items-center gap-1.5 cursor-pointer rounded-xl bg-neutral-900 border border-white/5 px-4 py-2.5 text-xs text-neutral-400 hover:text-white hover:bg-neutral-850 hover:border-white/15 transition-all active:scale-95 shadow"
+            className="flex items-center gap-1.5 cursor-pointer rounded-xl bg-neutral-900 border border-white/5 px-4 py-2.5 text-xs text-neutral-400 hover:text-white hover:bg-neutral-850 hover:border-white/15 transition-all active:scale-95 shadow shrink-0"
             id="back-to-top-btn"
           >
             Back To Top <ArrowUp className={`w-4 h-4 ${textAccent}`} />

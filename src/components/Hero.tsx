@@ -83,21 +83,37 @@ export default function Hero({ onOpenBooking, onScrollToGallery }: HeroProps) {
               initial={false}
               animate={{
                 opacity: isActive ? 1 : 0,
-                scale: isActive ? 1.05 : 1,
+                scale: isActive ? 1.03 : 1,
               }}
               transition={{
                 opacity: { duration: 1.8, ease: "easeInOut" },
                 scale: { duration: 7, ease: "easeOut" }
               }}
-              className="absolute inset-0 bg-cover bg-center brightness-[0.42] filter contrast-[1.05]"
-              style={{ backgroundImage: `url('${imgUrl}')` }}
-            />
+              className="absolute inset-0"
+            >
+              {/* Ambient blurred backdrop for seamless edge-to-edge fill on tall mobile viewports */}
+              <img
+                src={imgUrl}
+                alt=""
+                aria-hidden="true"
+                className="absolute inset-0 w-full h-full object-cover object-center filter blur-2xl opacity-40 scale-115 sm:hidden"
+              />
+
+              {/* Responsive main site inspection image with mobile-optimized eye-line focal positioning */}
+              <img
+                src={imgUrl}
+                alt="LandSeeds Site Inspection"
+                className="absolute inset-0 w-full h-full object-cover object-[center_15%] sm:object-center brightness-[0.52] sm:brightness-[0.42] filter contrast-[1.06]"
+              />
+            </motion.div>
           );
         })}
       </div>
-      {/* Black Radial Gradient Frame */}
-      <div className="absolute inset-0 bg-radial-[circle_at_center,_transparent_40%,_#000000_100%] pointer-events-none" />
-      <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-neutral-950 pointer-events-none" />
+
+      {/* Mobile-Adaptive Overlay Gradients: Balanced vertical framing on phones, radial on desktop */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/85 via-black/35 to-neutral-950 sm:hidden pointer-events-none" />
+      <div className="hidden sm:block absolute inset-0 bg-radial-[circle_at_center,_transparent_40%,_#000000_100%] pointer-events-none" />
+      <div className="hidden sm:block absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-neutral-950 pointer-events-none" />
 
       {/* 2. Floating Animated Particles Layer */}
       <div className="absolute inset-0 pointer-events-none z-10">
@@ -167,7 +183,7 @@ export default function Hero({ onOpenBooking, onScrollToGallery }: HeroProps) {
       </div>
 
       {/* 5. Main Content Container */}
-      <div className="relative max-w-5xl mx-auto px-6 py-20 text-center z-20">
+      <div className="relative max-w-5xl mx-auto px-4 sm:px-6 py-10 sm:py-20 text-center z-20">
         
         {/* Brand Pulse Badge */}
         <motion.div 

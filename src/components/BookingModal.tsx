@@ -21,7 +21,6 @@ export default function BookingModal({ isOpen, onClose, selectedEstate, estatesL
     email: "",
     phone: "",
     selectedEstateId: selectedEstate?.id || estatesList[0]?.id || "",
-    plotSize: "500",
     date: "",
     message: ""
   });
@@ -54,11 +53,9 @@ export default function BookingModal({ isOpen, onClose, selectedEstate, estatesL
   };
 
   const activeEstateObj = estatesList.find(e => e.id === formData.selectedEstateId) || selectedEstate || estatesList[0];
-  const calculatedPrice = activeEstateObj ? activeEstateObj.prices[Number(formData.plotSize) as 250 | 500] : 0;
 
   const handleWhatsAppFinalize = () => {
     const estateName = activeEstateObj ? activeEstateObj.title : "";
-    const size = formData.plotSize;
     const dateFormatted = formData.date;
     const text = `Hello LandSeeds Team, I just submitted an inspection/reservation booking on your website!
     
@@ -66,7 +63,6 @@ export default function BookingModal({ isOpen, onClose, selectedEstate, estatesL
 *Name*: ${formData.fullName}
 *Phone*: ${formData.phone}
 *Selected Estate*: ${estateName}
-*Plot Size*: ${size}sqm
 *Preferred Date*: ${dateFormatted}
 *Comments*: ${formData.message || "None"}`;
 
@@ -209,74 +205,24 @@ export default function BookingModal({ isOpen, onClose, selectedEstate, estatesL
                     </div>
                   </div>
 
-                  {/* Plot Size & Date Grid */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    {/* Plot Size */}
-                    <div>
-                      <label className="block text-xs font-medium text-neutral-300 uppercase tracking-wider mb-1">
-                        Desired Plot Size
-                      </label>
-                      <div className="flex rounded-lg border border-white/10 overflow-hidden text-sm bg-black/40">
-                        <button
-                          type="button"
-                          onClick={() => setFormData({ ...formData, plotSize: "250" })}
-                          className={`flex-1 py-2 text-center transition-all ${
-                            formData.plotSize === "250"
-                              ? "bg-red-600 text-white font-semibold"
-                              : "text-neutral-400 hover:bg-white/5"
-                          }`}
-                        >
-                          250 sqm
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => setFormData({ ...formData, plotSize: "500" })}
-                          className={`flex-1 py-2 text-center transition-all ${
-                            formData.plotSize === "500"
-                              ? "bg-red-600 text-white font-semibold"
-                              : "text-neutral-400 hover:bg-white/5"
-                          }`}
-                        >
-                          500 sqm
-                        </button>
-                      </div>
-                    </div>
-
-                    {/* Preferred Date */}
-                    <div>
-                      <label className="block text-xs font-medium text-neutral-300 uppercase tracking-wider mb-1">
-                        Preferred Date *
-                      </label>
-                      <div className="relative">
-                        <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-neutral-500">
-                          <Calendar className="h-4 h-4" />
-                        </span>
-                        <input
-                          type="date"
-                          required
-                          value={formData.date}
-                          onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-                          className="w-full rounded-lg border border-white/10 bg-black/40 pl-10 pr-3 py-1.5 text-sm text-white focus:border-red-600 focus:outline-none"
-                        />
-                      </div>
+                  {/* Preferred Date */}
+                  <div>
+                    <label className="block text-xs font-medium text-neutral-300 uppercase tracking-wider mb-1">
+                      Preferred Date *
+                    </label>
+                    <div className="relative">
+                      <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-neutral-500">
+                        <Calendar className="h-4 h-4" />
+                      </span>
+                      <input
+                        type="date"
+                        required
+                        value={formData.date}
+                        onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+                        className="w-full rounded-lg border border-white/10 bg-black/40 pl-10 pr-3 py-2 text-sm text-white focus:border-red-600 focus:outline-none"
+                      />
                     </div>
                   </div>
-
-                  {/* Financial Estimate Card */}
-                  {activeEstateObj && (
-                    <div className="rounded-lg bg-neutral-950 p-4 border border-white/5">
-                      <div className="flex justify-between items-center">
-                        <span className="text-xs text-neutral-400">Estimated Land Price:</span>
-                        <span className="text-lg font-bold font-display text-white">
-                          ₦{calculatedPrice.toLocaleString()}
-                        </span>
-                      </div>
-                      <div className="flex items-center justify-between text-[11px] text-neutral-500 mt-2 border-t border-white/5 pt-2">
-                        <span>Estate Location: {activeEstateObj.location.split(",")[0]}</span>
-                        <span className="text-red-500">Document: {activeEstateObj.documentation.split("&")[0]}</span>
-                      </div>
-                    </div>
-                  )}
 
                   {/* Additional Notes */}
                   <div>
@@ -329,8 +275,8 @@ export default function BookingModal({ isOpen, onClose, selectedEstate, estatesL
                         <span className="text-white font-mono font-bold text-sm tracking-wide">{bookingRef}</span>
                       </div>
                       <div>
-                        <span className="text-neutral-500 block">Property Price</span>
-                        <span className="text-white font-semibold">₦{calculatedPrice.toLocaleString()}</span>
+                        <span className="text-neutral-500 block">Estate Location</span>
+                        <span className="text-white font-semibold truncate block">{activeEstateObj?.location.split(",")[0]}</span>
                       </div>
                       <div>
                         <span className="text-neutral-500 block">Reserved For</span>
@@ -363,7 +309,6 @@ export default function BookingModal({ isOpen, onClose, selectedEstate, estatesL
                           email: "",
                           phone: "",
                           selectedEstateId: estatesList[0]?.id || "",
-                          plotSize: "500",
                           date: "",
                           message: ""
                         });

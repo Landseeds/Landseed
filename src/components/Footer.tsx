@@ -13,10 +13,9 @@ interface FooterProps {
   onScrollToTop: () => void;
   onScrollToSection: (sectionId: string) => void;
   onOpenBooking: () => void;
-  activePage?: "real-estate" | "plantations";
 }
 
-export default function Footer({ onScrollToTop, onScrollToSection, onOpenBooking, activePage = "real-estate" }: FooterProps) {
+export default function Footer({ onScrollToTop, onScrollToSection, onOpenBooking }: FooterProps) {
   const currentYear = new Date().getFullYear();
 
   const handleNewsletterSubmit = (e: React.FormEvent) => {
@@ -24,16 +23,15 @@ export default function Footer({ onScrollToTop, onScrollToSection, onOpenBooking
     alert("Subscribed! You will now receive LandSeeds newsletter updates directly.");
   };
 
-  const isPlantations = activePage === "plantations";
-  const brandAccent = isPlantations ? "bg-[#0B6B2E]" : "bg-red-600";
-  const brandAccentHover = isPlantations ? "hover:text-[#F5B700]" : "hover:text-red-500";
-  const textAccent = isPlantations ? "text-[#0B6B2E]" : "text-red-500";
-  const textAccentHover = isPlantations ? "hover:text-[#F5B700]" : "hover:text-red-450";
+  const brandAccent = "bg-red-600";
+  const brandAccentHover = "hover:text-red-500";
+  const textAccent = "text-red-500";
+  const textAccentHover = "hover:text-red-450";
 
   return (
     <footer className="bg-black text-white relative border-t border-white/10" id="footer-section">
       {/* Decorative vertical bounds flare */}
-      <div className={`absolute top-0 left-1/2 -translate-x-1/2 w-72 h-1 bg-gradient-to-r from-transparent via-${isPlantations ? "[#0B6B2E]" : "red-650"} to-transparent pointer-events-none`} />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-72 h-1 bg-gradient-to-r from-transparent via-red-650 to-transparent pointer-events-none" />
 
       {/* Main Footer Links Block */}
       <div className="max-w-7xl mx-auto px-6 py-16">
@@ -53,16 +51,13 @@ export default function Footer({ onScrollToTop, onScrollToSection, onOpenBooking
                   LandSeeds
                 </span>
                 <span className="text-[10px] text-neutral-400 font-mono block uppercase">
-                  {isPlantations ? "Plantations Agro-Equity" : "Integrated Services Ltd"}
+                  Integrated Services Ltd
                 </span>
               </div>
             </div>
 
             <p className="text-xs text-neutral-400 leading-relaxed font-light">
-              {isPlantations 
-                ? "Securing commercial agricultural yield and high property value appreciation. We manage elite plantation blocks of Oil Palm and Melina hardwoods to cultivate inflation-proof generational asset portfolios."
-                : "\"Affordable Lands, Secure Investments, Endless Possibilities.\" We acquire, map, survey, and process authentic real estate investments to fuel generational wealth with 100% legal integrity."
-              }
+              "Affordable Lands, Secure Investments, Endless Possibilities." We acquire, map, survey, and process authentic real estate investments and strategic agro land parcels to fuel generational wealth with 100% legal integrity.
             </p>
 
             {/* Newsletter form */}
@@ -75,7 +70,7 @@ export default function Footer({ onScrollToTop, onScrollToSection, onOpenBooking
                   type="email"
                   required
                   placeholder="yourname@gmail.com"
-                  className={`w-full rounded-lg border border-white/10 bg-neutral-900 px-3.5 py-2 pr-10 text-xs text-white placeholder-neutral-500 focus:outline-none focus:ring-1 focus:ring-${isPlantations ? "[#0B6B2E]" : "red-650"}`}
+                  className="w-full rounded-lg border border-white/10 bg-neutral-900 px-3.5 py-2 pr-10 text-xs text-white placeholder-neutral-500 focus:outline-none focus:ring-1 focus:ring-red-650"
                 />
                 <button
                   type="submit"
@@ -93,108 +88,50 @@ export default function Footer({ onScrollToTop, onScrollToSection, onOpenBooking
               Corporate Desk
             </h5>
             <ul className="space-y-2 text-xs text-neutral-400 font-light">
-              {!isPlantations ? (
-                <>
-                  <li>
-                    <button onClick={() => onScrollToSection("hero-section")} className="hover:text-white transition-colors cursor-pointer text-left">
-                      Corporate Home
-                    </button>
-                  </li>
-                  <li>
-                    <button onClick={() => onScrollToSection("about-section")} className="hover:text-white transition-colors cursor-pointer text-left">
-                      Our Mission
-                    </button>
-                  </li>
-                  <li>
-                    <button onClick={() => onScrollToSection("gallery-section")} className="hover:text-white transition-colors cursor-pointer text-left">
-                      Project Gallery
-                    </button>
-                  </li>
-                  <li>
-                    <button onClick={() => onScrollToSection("testimonials-section")} className="hover:text-white transition-colors cursor-pointer text-left">
-                      Client Reviews
-                    </button>
-                  </li>
-                  <li>
-                    <button onClick={onOpenBooking} className="text-red-500 hover:text-red-450 transition-colors cursor-pointer font-semibold text-left">
-                      Book VIP Inspection
-                    </button>
-                  </li>
-                </>
-              ) : (
-                <>
-                  <li>
-                    <button onClick={onScrollToTop} className="hover:text-white transition-colors cursor-pointer text-left">
-                      Plantantions Home
-                    </button>
-                  </li>
-                  <li>
-                    <button onClick={() => onScrollToSection("about-plantations")} className="hover:text-white transition-colors cursor-pointer text-left">
-                      Our Vision
-                    </button>
-                  </li>
-                  <li>
-                    <button onClick={() => onScrollToSection("oil-palm-pricing")} className="hover:text-white transition-colors cursor-pointer text-left">
-                      Oil Palm Blocks
-                    </button>
-                  </li>
-                  <li>
-                    <button onClick={() => onScrollToSection("melina-pricing")} className="hover:text-white transition-colors cursor-pointer text-left">
-                      Melina wood stands
-                    </button>
-                  </li>
-                  <li>
-                    <button onClick={() => onScrollToSection("gallery-plantations")} className="hover:text-white transition-colors cursor-pointer text-left">
-                      Project Gallery
-                    </button>
-                  </li>
-                  <li>
-                    <button onClick={() => onScrollToSection("plantation-reservation-form")} className="text-emerald-500 hover:text-[#F5B700] transition-colors cursor-pointer font-semibold text-left">
-                      Book Agro Consult
-                    </button>
-                  </li>
-                </>
-              )}
+              <li>
+                <button onClick={() => onScrollToSection("hero-section")} className="hover:text-white transition-colors cursor-pointer text-left">
+                  Corporate Home
+                </button>
+              </li>
+              <li>
+                <button onClick={() => onScrollToSection("about-section")} className="hover:text-white transition-colors cursor-pointer text-left">
+                  Our Mission
+                </button>
+              </li>
+              <li>
+                <button onClick={() => onScrollToSection("gallery-section")} className="hover:text-white transition-colors cursor-pointer text-left">
+                  Bold Estate Gallery
+                </button>
+              </li>
+              <li>
+                <button onClick={() => onScrollToSection("testimonials-section")} className="hover:text-white transition-colors cursor-pointer text-left">
+                  Client Reviews
+                </button>
+              </li>
+              <li>
+                <button onClick={onOpenBooking} className="text-red-500 hover:text-red-450 transition-colors cursor-pointer font-semibold text-left">
+                  Book VIP Inspection
+                </button>
+              </li>
             </ul>
           </div>
 
           {/* Column 3: Properties list overview */}
           <div className="lg:col-span-3 space-y-4">
             <h5 className="text-xs font-bold text-white uppercase tracking-wider font-display border-b border-white/5 pb-2">
-              {isPlantations ? "Plantation locations" : "Our Locations"}
+              Our Locations
             </h5>
             <ul className="space-y-2.5 text-xs text-neutral-400 font-light">
-              {!isPlantations ? (
-                ESTATES_DATA.map((est) => (
-                  <li key={est.id} className="group flex items-center justify-between text-[11px]">
-                    <span className="group-hover:text-white transition-colors truncate block max-w-[170px]">
-                      {est.title.replace("The Seeds Estate – ", "")}
-                    </span>
-                    <span className="text-[9px] font-mono font-medium text-neutral-500 bg-neutral-900 px-1 py-0.5 rounded uppercase">
-                      ₦{(est.prices[250] / 1000).toFixed(0)}k+
-                    </span>
-                  </li>
-                ))
-              ) : (
-                <>
-                  <li className="flex items-center justify-between text-[11.2px]">
-                    <span className="text-neutral-300">Ijebu Ogbere Hub</span>
-                    <span className="text-[9.2px] font-mono font-semibold text-emerald-450">Ogun State</span>
-                  </li>
-                  <li className="flex items-center justify-between text-[11.2px]">
-                    <span className="text-neutral-300">Ilaro Corridor</span>
-                    <span className="text-[9.2px] font-mono font-semibold text-emerald-450">Ogun State</span>
-                  </li>
-                  <li className="flex items-center justify-between text-[11.2px]">
-                    <span className="text-neutral-300">Ilishan Dev Node</span>
-                    <span className="text-[9.2px] font-mono font-semibold text-emerald-450">Ogun State</span>
-                  </li>
-                  <li className="flex items-center justify-between text-[11.2px]">
-                    <span className="text-neutral-300">Jekasale Plot Block</span>
-                    <span className="text-[9.2px] font-mono font-semibold text-emerald-450">Ogun State</span>
-                  </li>
-                </>
-              )}
+              {ESTATES_DATA.map((est) => (
+                <li key={est.id} className="group flex items-center justify-between text-[11px]">
+                  <span className="group-hover:text-white transition-colors truncate block max-w-[170px]">
+                    {est.title.replace("The Seeds Estate – ", "")}
+                  </span>
+                  <span className="text-[9px] font-mono font-medium text-neutral-500 bg-neutral-900 px-1 py-0.5 rounded uppercase">
+                    ₦{(est.prices[250] / 1000).toFixed(0)}k+
+                  </span>
+                </li>
+              ))}
             </ul>
           </div>
 

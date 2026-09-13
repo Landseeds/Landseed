@@ -3,9 +3,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React from "react";
-import { Sparkles, Instagram, Facebook, ArrowUp, Send, ShieldCheck, Mail, Phone, ExternalLink, Globe, MapPin } from "lucide-react";
+import React, { useState } from "react";
+import { Sparkles, Instagram, Facebook, ArrowUp, Send, ShieldCheck, Mail, Phone, ExternalLink, Globe, MapPin, Check } from "lucide-react";
 import { ESTATES_DATA } from "../data";
+import { sendToFormspree } from "../utils/formspree";
 
 const GOOGLE_MAPS_URL = "https://maps.app.goo.gl/RtXTWeK7vZ9ED5439";
 
@@ -17,10 +18,20 @@ interface FooterProps {
 
 export default function Footer({ onScrollToTop, onScrollToSection, onOpenBooking }: FooterProps) {
   const currentYear = new Date().getFullYear();
+  const [newsletterEmail, setNewsletterEmail] = useState("");
+  const [subscribed, setSubscribed] = useState(false);
 
-  const handleNewsletterSubmit = (e: React.FormEvent) => {
+  const handleNewsletterSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    alert("Subscribed! You will now receive LandSeeds newsletter updates directly.");
+    if (!newsletterEmail) return;
+    await sendToFormspree({
+      _subject: `Newsletter Subscription: ${newsletterEmail}`,
+      form_type: "Newsletter Subscription",
+      email: newsletterEmail,
+      submitted_at: new Date().toLocaleString()
+    });
+    setSubscribed(true);
+    setNewsletterEmail("");
   };
 
   const brandAccent = "bg-red-600";
@@ -61,25 +72,34 @@ export default function Footer({ onScrollToTop, onScrollToSection, onOpenBooking
             </p>
 
             {/* Newsletter form */}
-            <form onSubmit={handleNewsletterSubmit} className="space-y-2 max-w-sm pt-2">
-              <label className="block text-[10px] text-neutral-400 font-mono uppercase tracking-wider">
-                Subscribe to Land Newsletters
-              </label>
-              <div className="relative">
-                <input
-                  type="email"
-                  required
-                  placeholder="yourname@gmail.com"
-                  className="w-full rounded-lg border border-white/10 bg-neutral-900 px-3.5 py-2 pr-10 text-xs text-white placeholder-neutral-500 focus:outline-none focus:ring-1 focus:ring-red-650"
-                />
-                <button
-                  type="submit"
-                  className={`absolute inset-y-1.5 right-1.5 px-2 ${brandAccent} hover:opacity-90 text-white rounded text-[10px] transition-colors`}
-                >
-                  <Send className="w-3.5 h-3.5" />
-                </button>
+            {subscribed ? (
+              <div className="flex items-center gap-2 text-xs text-emerald-400 py-2">
+                <Check className="w-4 h-4" />
+                <span>Thank you! You are subscribed to LandSeeds updates.</span>
               </div>
-            </form>
+            ) : (
+              <form onSubmit={handleNewsletterSubmit} className="space-y-2 max-w-sm pt-2">
+                <label className="block text-[10px] text-neutral-400 font-mono uppercase tracking-wider">
+                  Subscribe to Land Newsletters
+                </label>
+                <div className="relative">
+                  <input
+                    type="email"
+                    required
+                    placeholder="yourname@gmail.com"
+                    value={newsletterEmail}
+                    onChange={(e) => setNewsletterEmail(e.target.value)}
+                    className="w-full rounded-lg border border-white/10 bg-neutral-900 px-3.5 py-2 pr-10 text-xs text-white placeholder-neutral-500 focus:outline-none focus:ring-1 focus:ring-red-650"
+                  />
+                  <button
+                    type="submit"
+                    className={`absolute inset-y-1.5 right-1.5 px-2 ${brandAccent} hover:opacity-90 text-white rounded text-[10px] transition-colors cursor-pointer`}
+                  >
+                    <Send className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              </form>
+            )}
           </div>
 
           {/* Column 2: Navigation Links */}

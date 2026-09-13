@@ -7,6 +7,7 @@ import React, { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { X, Calendar, Phone, Mail, User, Layers, CheckCircle, ArrowRight } from "lucide-react";
 import { Estate } from "../types";
+import { sendToFormspree } from "../utils/formspree";
 
 interface BookingModalProps {
   isOpen: boolean;
@@ -35,7 +36,7 @@ export default function BookingModal({ isOpen, onClose, selectedEstate, estatesL
     }
   }, [selectedEstate]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.fullName || !formData.phone || !formData.date) {
       alert("Please fill in all required fields (Name, Phone, and Preferred Date).");
@@ -43,13 +44,26 @@ export default function BookingModal({ isOpen, onClose, selectedEstate, estatesL
     }
 
     setLoading(true);
-    // Simulate real server-side transaction ingestion
-    setTimeout(() => {
-      const refCode = "LSS-" + Math.floor(100000 + Math.random() * 900000);
-      setBookingRef(refCode);
-      setLoading(false);
-      setIsSubmitted(true);
-    }, 1200);
+    const refCode = "LSS-" + Math.floor(100000 + Math.random() * 900000);
+    setBookingRef(refCode);
+
+    // Send data to Formspree endpoint
+    await sendToFormspree({
+      _subject: `New Site Inspection Booking: ${activeEstateObj?.title || "Estate Plot"} [${refCode}]`,
+      form_type: "Site Inspection & Reservation",
+      booking_reference: refCode,
+      name: formData.fullName,
+      phone: formData.phone,
+      email: formData.email || "Not Provided",
+      selected_estate: activeEstateObj?.title || "Estate Plot",
+      estate_location: activeEstateObj?.location || "Lagos State - Epe",
+      preferred_date: formData.date,
+      message_or_special_requests: formData.message || "None",
+      submitted_at: new Date().toLocaleString()
+    });
+
+    setLoading(false);
+    setIsSubmitted(true);
   };
 
   const activeEstateObj = estatesList.find(e => e.id === formData.selectedEstateId) || selectedEstate || estatesList[0];

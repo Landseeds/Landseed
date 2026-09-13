@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { ESTATES_DATA } from "../data";
 import { Estate } from "../types";
+import { sendToFormspree } from "../utils/formspree";
 
 const GOOGLE_MAPS_URL = "https://maps.app.goo.gl/RtXTWeK7vZ9ED5439";
 const GOOGLE_MAPS_EMBED_URL = "https://maps.google.com/maps?q=6.6278571,3.984016&hl=en&z=13&output=embed";
@@ -27,18 +28,27 @@ export default function Contact() {
   const [sending, setSending] = useState(false);
   const [activeMapEstate, setActiveMapEstate] = useState<Estate>(ESTATES_DATA[4]); // default to Epe Marina
 
-  const handleContactSubmit = (e: React.FormEvent) => {
+  const handleContactSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name || !formData.phone || !formData.message) {
       alert("Name, phone, and message are required parameters.");
       return;
     }
     setSending(true);
-    setTimeout(() => {
-      setSending(false);
-      setIsSent(true);
-      setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
-    }, 1200);
+
+    await sendToFormspree({
+      _subject: `New Inquiry from ${formData.name} - LandSeeds Contact Form`,
+      form_type: "General Contact / Investor Inquiry",
+      name: formData.name,
+      phone: formData.phone,
+      email: formData.email || "Not Provided",
+      message: formData.message,
+      submitted_at: new Date().toLocaleString()
+    });
+
+    setSending(false);
+    setIsSent(true);
+    setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
   };
 
   const triggerWhatsAppSupport = () => {

@@ -21,6 +21,7 @@ import {
   Compass, 
   ExternalLink 
 } from "lucide-react";
+import { sendToFormspree } from "../utils/formspree";
 
 // Hook/component helper for numeric count up animation with viewport detection
 function PlantationCountUp({ value, suffix = "", prefix = "" }: { value: number; suffix?: string; prefix?: string }) {
@@ -152,17 +153,28 @@ export default function PlantationsPage() {
     setLeaves(freshLeaves);
   }, []);
 
-  const handleLeadSubmit = (e: React.FormEvent) => {
+  const handleLeadSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!leadForm.name || !leadForm.phone) {
       alert("Please provide your Name and Phone number.");
       return;
     }
     setSubmitting(true);
-    setTimeout(() => {
-      setSubmitting(false);
-      setIsSubmitted(true);
-    }, 1200);
+
+    await sendToFormspree({
+      _subject: `New Plantation Reservation from ${leadForm.name}`,
+      form_type: "Plantation Pre-Reservation",
+      name: leadForm.name,
+      phone: leadForm.phone,
+      email: leadForm.email || "Not Provided",
+      investment_interest: leadForm.interest,
+      desired_scale: leadForm.size,
+      note: leadForm.message || "None",
+      submitted_at: new Date().toLocaleString()
+    });
+
+    setSubmitting(false);
+    setIsSubmitted(true);
   };
 
   const finalizeWhatsAppBooking = () => {

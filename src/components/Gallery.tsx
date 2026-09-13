@@ -7,7 +7,7 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { 
   Maximize2, X, ChevronLeft, ChevronRight, Eye, Sparkles, 
-  MapPin, CheckCircle2, Layers, Download, Share2, LayoutGrid, Grid2X2
+  MapPin, CheckCircle2, Layers, Download, Share2, LayoutGrid, Grid2X2, Play, Video
 } from "lucide-react";
 
 export interface GalleryItem {
@@ -16,6 +16,8 @@ export interface GalleryItem {
   category: "Estates & Layouts" | "Site Inspections" | "Development Hubs" | "Plantations";
   location: string;
   imageUrl: string;
+  videoUrl?: string;
+  isVideo?: boolean;
   fallbackUrl?: string;
   description: string;
   tag: string;
@@ -129,6 +131,71 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     imageUrl: "https://i.imgur.com/unQRgoH.png",
     description: "Complete unencumbered freehold title documentation handover ensuring 100% legal ownership peace.",
     tag: "Freehold Title"
+  },
+  {
+    id: "gal-13",
+    title: "Commercial Agro Plantation Field Operations",
+    category: "Plantations",
+    location: "Ijebu Ogbere Hub, Ogun State",
+    imageUrl: "https://i.imgur.com/CpbH6oj.png",
+    description: "Active on-ground development, surveyed plantation boundaries, and intensive soil cultivation at LandSeeds agro corridor.",
+    tag: "Agro Farmland"
+  },
+  {
+    id: "gal-14",
+    title: "LandSeeds Agro-Forestry & Crop Plantation Block",
+    category: "Plantations",
+    location: "Ogun Agricultural Corridor",
+    imageUrl: "https://i.imgur.com/e5gn3xb.png",
+    description: "Thriving commercial agricultural plantation block prepared for high-yield oil palm and cash crop cultivation.",
+    tag: "Plantation Site"
+  },
+  {
+    id: "gal-15",
+    title: "Site Inspection & Client Field Walkthrough",
+    category: "Site Inspections",
+    location: "Lagos State - Epe Corridor",
+    imageUrl: "https://i.imgur.com/smunVOx.png",
+    description: "Prospective investors and clients verifying estate topography, accessibility, and survey pegs on-site.",
+    tag: "Site Inspection"
+  },
+  {
+    id: "gal-16",
+    title: "Site Inspection & Ground Topography Review",
+    category: "Site Inspections",
+    location: "The Seeds Estate, Epe",
+    imageUrl: "https://i.imgur.com/XVoL45t.png",
+    description: "Physical inspection of 100% dry tableland topography, boundary beacons, and estate access corridors.",
+    tag: "Site Inspection"
+  },
+  {
+    id: "gal-17",
+    title: "Site Inspection & Plot Allocation Verification",
+    category: "Site Inspections",
+    location: "Epe Development Node, Lagos",
+    imageUrl: "https://i.imgur.com/hpszQab.png",
+    description: "On-ground investor delegation inspecting land perimeter boundaries and confirmed layout allocations.",
+    tag: "Site Inspection"
+  },
+  {
+    id: "gal-18",
+    title: "Site Inspection & Investor Ground Briefing",
+    category: "Site Inspections",
+    location: "The Seeds Estate, Epe",
+    imageUrl: "https://i.imgur.com/fbv2YOU.png",
+    description: "Prospective investors and clients receiving on-site layout explanations and boundary peg confirmations during weekend site inspection.",
+    tag: "Site Inspection"
+  },
+  {
+    id: "gal-19",
+    title: "Live Site Inspection & On-Ground Video Tour",
+    category: "Site Inspections",
+    location: "LandSeeds Estate Corridor, Epe",
+    imageUrl: "https://i.imgur.com/fbv2YOU.png",
+    videoUrl: "https://i.imgur.com/mHjL8zM.mp4",
+    isVideo: true,
+    description: "Watch live footage from our scheduled client site inspection tour verifying access roads, boundary markers, and dry tableland topography.",
+    tag: "Video Tour"
   }
 ];
 
@@ -234,7 +301,7 @@ export default function Gallery({ onOpenBooking }: { onOpenBooking?: () => void 
                 <Layers className="w-4 h-4" />
               </div>
               <div>
-                <div className="text-base font-black font-mono text-white leading-none">12+ Live Assets</div>
+                <div className="text-base font-black font-mono text-white leading-none">{GALLERY_ITEMS.length}+ Live Assets</div>
                 <div className="text-[10px] text-neutral-400 mt-1 font-medium">100% Surveyed & Verified</div>
               </div>
             </div>
@@ -307,6 +374,15 @@ export default function Gallery({ onOpenBooking }: { onOpenBooking?: () => void 
                   {/* Deep Gradient Overlays for High Contrast Readability */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/25 to-transparent opacity-85 group-hover:opacity-90 transition-opacity duration-300" />
                   
+                  {/* Video Play Overlay Indicator if item is video */}
+                  {item.isVideo && (
+                    <div className="absolute inset-0 flex items-center justify-center z-15 pointer-events-none">
+                      <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-red-600/90 text-white flex items-center justify-center shadow-2xl border-2 border-white/90 group-hover:scale-110 group-hover:bg-red-600 transition-transform duration-300">
+                        <Play className="w-6 h-6 sm:w-7 sm:h-7 fill-white ml-0.5" />
+                      </div>
+                    </div>
+                  )}
+
                   {/* Top Tag Badge */}
                   <div className="absolute top-4 left-4 z-10">
                     <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-black/85 backdrop-blur-md border border-white/20 text-xs font-mono font-bold tracking-wide uppercase text-white shadow-lg">
@@ -318,7 +394,7 @@ export default function Gallery({ onOpenBooking }: { onOpenBooking?: () => void 
                   {/* Top Right Quick Enlarge Action Icon */}
                   <div className="absolute top-4 right-4 z-10 opacity-90 group-hover:opacity-100 transition-all duration-300 transform group-hover:scale-110">
                     <div className="w-10 h-10 rounded-xl bg-red-650 text-white flex items-center justify-center shadow-xl border border-red-400">
-                      <Maximize2 className="w-5 h-5" />
+                      {item.isVideo ? <Play className="w-5 h-5 fill-white" /> : <Maximize2 className="w-5 h-5" />}
                     </div>
                   </div>
 
@@ -346,7 +422,11 @@ export default function Gallery({ onOpenBooking }: { onOpenBooking?: () => void 
                   <div className="mt-4 pt-4 border-t border-white/10 flex items-center justify-between text-xs font-medium text-neutral-400">
                     <span className="px-2.5 py-1 rounded bg-white/5 border border-white/5 text-neutral-300 font-mono text-[11px] uppercase">{item.category}</span>
                     <span className="text-white group-hover:text-red-400 font-bold inline-flex items-center gap-1.5 transition-colors text-xs uppercase tracking-wider">
-                      Inspect High-Res Photo <Eye className="w-4 h-4 text-red-500" />
+                      {item.isVideo ? (
+                        <>Watch Site Video <Play className="w-4 h-4 text-red-500 fill-red-500" /></>
+                      ) : (
+                        <>Inspect High-Res Photo <Eye className="w-4 h-4 text-red-500" /></>
+                      )}
                     </span>
                   </div>
                 </div>
@@ -431,11 +511,11 @@ export default function Gallery({ onOpenBooking }: { onOpenBooking?: () => void 
 
                 <div className="flex items-center gap-2 shrink-0">
                   <a
-                    href={activeItem.imageUrl}
+                    href={activeItem.isVideo && activeItem.videoUrl ? activeItem.videoUrl : activeItem.imageUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="p-2 rounded-xl bg-neutral-800 hover:bg-neutral-700 text-neutral-300 hover:text-white transition-colors border border-white/10"
-                    title="Open original high-resolution"
+                    title={activeItem.isVideo ? "Open video in full view" : "Open original high-resolution"}
                   >
                     <Maximize2 className="w-4 h-4" />
                   </a>
@@ -451,19 +531,40 @@ export default function Gallery({ onOpenBooking }: { onOpenBooking?: () => void 
                 </div>
               </div>
 
-              {/* Main Image Stage with bold high-contrast framing */}
+              {/* Main Media Stage with bold high-contrast framing */}
               <div className="relative flex-1 min-h-[260px] max-h-[60vh] sm:max-h-[65vh] bg-black flex items-center justify-center overflow-hidden p-2">
-                <img
-                  src={activeItem.imageUrl}
-                  alt={activeItem.title}
-                  referrerPolicy="no-referrer"
-                  className="max-h-[58vh] sm:max-h-[62vh] w-auto max-w-full object-contain rounded-xl shadow-2xl filter contrast-[1.08] brightness-[0.98]"
-                />
+                {activeItem.isVideo && activeItem.videoUrl ? (
+                  <video
+                    src={activeItem.videoUrl}
+                    controls
+                    autoPlay
+                    playsInline
+                    poster={activeItem.imageUrl}
+                    className="max-h-[58vh] sm:max-h-[62vh] w-auto max-w-full rounded-xl shadow-2xl object-contain bg-black"
+                  >
+                    <source src={activeItem.videoUrl} type="video/mp4" />
+                    Your browser does not support HTML5 video playback.
+                  </video>
+                ) : (
+                  <img
+                    src={activeItem.imageUrl}
+                    alt={activeItem.title}
+                    referrerPolicy="no-referrer"
+                    className="max-h-[58vh] sm:max-h-[62vh] w-auto max-w-full object-contain rounded-xl shadow-2xl filter contrast-[1.08] brightness-[0.98]"
+                    onError={(e) => {
+                      const target = e.currentTarget;
+                      if (!target.dataset.triedFallback) {
+                        target.dataset.triedFallback = "true";
+                        target.src = activeItem.imageUrl.replace(/\.png$/, "");
+                      }
+                    }}
+                  />
+                )}
 
                 {/* Left navigation arrow */}
                 <button
                   onClick={handlePrev}
-                  className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 p-2 sm:p-3 rounded-full bg-black/75 hover:bg-red-650 text-white border border-white/20 transition-all active:scale-90 cursor-pointer shadow-xl backdrop-blur-md"
+                  className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 p-2 sm:p-3 rounded-full bg-black/75 hover:bg-red-650 text-white border border-white/20 transition-all active:scale-90 cursor-pointer shadow-xl backdrop-blur-md z-20"
                   title="Previous (Left Arrow)"
                 >
                   <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
@@ -472,7 +573,7 @@ export default function Gallery({ onOpenBooking }: { onOpenBooking?: () => void 
                 {/* Right navigation arrow */}
                 <button
                   onClick={handleNext}
-                  className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 p-2 sm:p-3 rounded-full bg-black/75 hover:bg-red-650 text-white border border-white/20 transition-all active:scale-90 cursor-pointer shadow-xl backdrop-blur-md"
+                  className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 p-2 sm:p-3 rounded-full bg-black/75 hover:bg-red-650 text-white border border-white/20 transition-all active:scale-90 cursor-pointer shadow-xl backdrop-blur-md z-20"
                   title="Next (Right Arrow)"
                 >
                   <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
@@ -486,6 +587,11 @@ export default function Gallery({ onOpenBooking }: { onOpenBooking?: () => void 
                     <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-white/10 text-neutral-300 font-semibold">
                       {activeItem.category}
                     </span>
+                    {activeItem.isVideo && (
+                      <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-red-600/30 text-red-400 border border-red-500/30 font-semibold flex items-center gap-1">
+                        <Video className="w-3 h-3" /> Live Video
+                      </span>
+                    )}
                     <span className="text-[10px] font-mono text-emerald-400 flex items-center gap-1 font-semibold">
                       <CheckCircle2 className="w-3 h-3" /> Fully Surveyed Plot
                     </span>

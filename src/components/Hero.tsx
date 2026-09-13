@@ -3,9 +3,15 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "motion/react";
 import { Trees, MapPin, Sparkles, MessageCircle, ArrowDown } from "lucide-react";
+
+const HERO_BACKGROUND_IMAGES = [
+  "https://i.imgur.com/smunVOx.png",
+  "https://i.imgur.com/XVoL45t.png",
+  "https://i.imgur.com/hpszQab.png"
+];
 
 interface HeroProps {
   onOpenBooking: () => void;
@@ -13,6 +19,22 @@ interface HeroProps {
 }
 
 export default function Hero({ onOpenBooking, onScrollToGallery }: HeroProps) {
+  const [currentBgIndex, setCurrentBgIndex] = useState(0);
+
+  useEffect(() => {
+    // Preload all background images
+    HERO_BACKGROUND_IMAGES.forEach((src) => {
+      const img = new Image();
+      img.src = src;
+    });
+
+    const timer = setInterval(() => {
+      setCurrentBgIndex((prev) => (prev + 1) % HERO_BACKGROUND_IMAGES.length);
+    }, 6000);
+
+    return () => clearInterval(timer);
+  }, []);
+
   const handleWhatsAppChat = () => {
     const text = "Hello LandSeeds Team, I am visiting your premium real estate platform and would like to inquire about genuine lands in Lagos State - Epe.";
     window.open(`https://wa.me/2348108640108?text=${encodeURIComponent(text)}`, "_blank", "noopener,noreferrer");
@@ -51,13 +73,28 @@ export default function Hero({ onOpenBooking, onScrollToGallery }: HeroProps) {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-neutral-950 pt-20" id="hero-section">
-      {/* 1. Underlying Premium Image Layer with Vignette */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center brightness-[0.4]"
-        style={{ 
-          backgroundImage: `url('https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=1920&auto=format&fit=crop')`,
-        }}
-      />
+      {/* 1. Underlying Premium Cycling Image Layer with Smooth Crossfade */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {HERO_BACKGROUND_IMAGES.map((imgUrl, idx) => {
+          const isActive = idx === currentBgIndex;
+          return (
+            <motion.div
+              key={imgUrl}
+              initial={false}
+              animate={{
+                opacity: isActive ? 1 : 0,
+                scale: isActive ? 1.05 : 1,
+              }}
+              transition={{
+                opacity: { duration: 1.8, ease: "easeInOut" },
+                scale: { duration: 7, ease: "easeOut" }
+              }}
+              className="absolute inset-0 bg-cover bg-center brightness-[0.42] filter contrast-[1.05]"
+              style={{ backgroundImage: `url('${imgUrl}')` }}
+            />
+          );
+        })}
+      </div>
       {/* Black Radial Gradient Frame */}
       <div className="absolute inset-0 bg-radial-[circle_at_center,_transparent_40%,_#000000_100%] pointer-events-none" />
       <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-neutral-950 pointer-events-none" />
@@ -180,8 +217,9 @@ export default function Hero({ onOpenBooking, onScrollToGallery }: HeroProps) {
           className="flex flex-col sm:flex-row gap-4 justify-center items-center mt-10 max-w-md mx-auto"
         >
           <button
+            id="hero-explore-gallery-btn"
             onClick={onScrollToGallery}
-            className="w-full sm:w-auto cursor-pointer inline-flex items-center justify-center gap-2 bg-red-650 hover:bg-red-750 text-white font-semibold px-8 py-4 rounded-xl transition-all shadow-lg shadow-red-650/20 hover:shadow-red-650/40 hover:-translate-y-0.5 active:translate-y-0 text-sm"
+            className="w-full sm:w-auto cursor-pointer inline-flex items-center justify-center gap-2 bg-[#E30613] hover:bg-red-700 text-white font-semibold px-8 py-4 rounded-xl border border-red-400 hover:border-white transition-all shadow-lg shadow-red-600/30 hover:shadow-red-600/50 hover:-translate-y-0.5 active:translate-y-0 text-sm"
           >
             Explore Project Gallery
           </button>
@@ -230,8 +268,25 @@ export default function Hero({ onOpenBooking, onScrollToGallery }: HeroProps) {
           </div>
         </motion.div>
 
+        {/* Background Slide Indicators */}
+        <div className="flex items-center justify-center gap-2 mt-10 z-20">
+          {HERO_BACKGROUND_IMAGES.map((_, idx) => (
+            <button
+              key={idx}
+              type="button"
+              onClick={() => setCurrentBgIndex(idx)}
+              aria-label={`Show hero background slide ${idx + 1}`}
+              className={`h-1.5 rounded-full transition-all duration-500 cursor-pointer ${
+                idx === currentBgIndex
+                  ? "w-8 bg-red-600 shadow-sm shadow-red-500/50"
+                  : "w-2.5 bg-white/30 hover:bg-white/60"
+              }`}
+            />
+          ))}
+        </div>
+
         {/* Scroll indicator */}
-        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-25 text-neutral-500 animate-bounce cursor-pointer flex flex-col items-center gap-1.5 hover:text-white transition-all" onClick={onScrollToGallery}>
+        <div className="mt-8 z-25 text-neutral-500 animate-bounce cursor-pointer inline-flex flex-col items-center gap-1.5 hover:text-white transition-all" onClick={onScrollToGallery}>
           <span className="text-[10px] font-mono tracking-widest uppercase">Explore LandSeeds</span>
           <ArrowDown className="w-4 h-4" />
         </div>
